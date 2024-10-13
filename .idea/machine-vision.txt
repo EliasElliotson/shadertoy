@@ -1,0 +1,17 @@
+vec4 rotateColor( vec4 col ) {
+
+    // Create a vec3 using the r, g, and b channels
+    // Normalize the vector
+    vec3 c = normalize( vec3( col.x, col.y, col.z ) );
+    
+    // Return the new color
+    return vec4( c.x, c.y, c.z, col.w );
+}
+
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+    vec4 col = texture(iChannel0, fragCoord/iResolution.xy);
+
+    // Output to screen
+    fragColor = rotateColor( col );
+}
