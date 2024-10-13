@@ -1,0 +1,22 @@
+const float PI = 3.141592653589793238462643383279502;
+
+vec4 rotateColor( vec4 col ) {
+    vec3 c = vec3( ( col.x * 2.0 ) - 1.0, ( col.y * 2.0 ) - 1.0, ( col.z * 2.0 ) - 1.0 );
+    
+    
+    float a = atan( c.y / c.x ) + iTime + PI + ( ( sign(c.x) - 1.0 ) / 2.0 ) * PI;
+    float d = sqrt( pow( c.x, 2.0 ) + pow( c.y, 2.0 ) );
+    
+    c.x = sin(a) * d;
+    c.y = cos(a) * d;
+    
+    // Return the new color
+    return vec4( ( c.x + 1.0 ) / 2.0, ( c.y + 1.0 ) / 2.0, ( c.z + 1.0 ) / 2.0, col.w );
+}
+
+void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
+    vec4 col = texture(iChannel0, fragCoord/iResolution.xy);
+
+    // Output to screen
+    fragColor = rotateColor( col );
+}
